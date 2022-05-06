@@ -1,5 +1,7 @@
 import { Message } from './Message';
 
+const axios = require('axios').default;
+
 class Messages {
 
     public messages: Message[] = [];

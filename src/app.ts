@@ -4,7 +4,6 @@ import { Users } from './classes/Users';
 import { Message } from './classes/Message';
 import { Messages } from './classes/Messages';
 
-
 const menu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
 const digiteNome: string = 'Digite seu nome\n';
 const digiteId: string = 'Digite um ID\n';
@@ -30,7 +29,7 @@ while (option !== 4) {
             const id = readLineSync.questionInt(digiteId);
             if (users.codigoExistente(id) === false) {
                 const user = new User(id, name)
-                users.createUser(user);
+                users.createUser(user); 
                 console.log('[Lista de Usuarios]')
                 users.listUser();
             } else {
