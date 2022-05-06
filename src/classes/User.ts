@@ -1,11 +1,11 @@
 import { IUsers } from '../interfaces/IUsers'
 
-class User implements  IUsers{
-    
+class User implements IUsers {
+
     public id: number;
     public name: string;
-    
-    constructor(id: number, name: string){
+
+    constructor(id: number, name: string) {
         this.name = name;
         this.id = id;
     }

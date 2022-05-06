@@ -1,14 +1,13 @@
-import readLineSync from 'readline-sync';
-import { User } from './classes/User';
-import { Users } from './classes/Users';
-class Sms {
-    constructor(destinatario, remetente, subject, message) {
-        this.subject = subject;
-        this.message = message;
-        this.destinatario = destinatario;
-        this.remetente = remetente;
-    }
-}
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const readline_sync_1 = __importDefault(require("readline-sync"));
+const User_1 = require("./classes/User");
+const Users_1 = require("./classes/Users");
+const Message_1 = require("./classes/Message");
+const Messages_1 = require("./classes/Messages");
 const menu = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
 const digiteNome = 'Digite seu nome\n';
 const digiteId = 'Digite um ID\n';
@@ -18,36 +17,19 @@ const digiteAssunto = 'Digite um assunto\n';
 const digiteMensagem = 'Digite sua mensagem\n';
 const verMensagem = 'Digite o ID do usuario que deseja ver o historico\n';
 let option = 0;
-let name;
-let id;
-let remetente = 0;
-let destinatario = 0;
-let subject = '';
-let message = '';
 let idViewMessage = 0;
-let messages = [];
-let fullMessage;
-let showMessages = [];
-function listMessages() {
-    for (let i = 0; i < showMessages.length; i++) {
-        console.log(`[Assunto: ${showMessages[i].subject}]\n[Recebida/Enviada]\nEnviado por: [${showMessages[i].remetente}] | Recebida por: [${showMessages[i].destinatario}]\n[Mensagem]\n${showMessages[i].message}\n---------\n`);
-    }
-}
-function findMessages(number) {
-    let showMessages = messages.filter(e => e.remetente === number || e.destinatario === number);
-    return showMessages;
-}
+const users = new Users_1.Users();
+const messages = new Messages_1.Messages();
 while (option !== 4) {
-    const users = new Users();
     console.log('---------');
     console.log(menu);
-    option = readLineSync.questionInt('Digite uma opção\n');
+    option = readline_sync_1.default.questionInt('Digite uma opção\n');
     switch (option) {
         case 1:
-            name = readLineSync.question(digiteNome);
-            id = readLineSync.questionInt(digiteId);
+            const name = readline_sync_1.default.question(digiteNome);
+            const id = readline_sync_1.default.questionInt(digiteId);
             if (users.codigoExistente(id) === false) {
-                const user = new User(id, name);
+                const user = new User_1.User(id, name);
                 users.createUser(user);
                 console.log('[Lista de Usuarios]');
                 users.listUser();
@@ -57,35 +39,38 @@ while (option !== 4) {
             }
             break;
         case 2:
-            if (users.listUser() === []) {
+            if (users.users.length === 0) {
                 console.log('Nenhum usuario cadastrado');
             }
             else {
                 users.listUser();
-                remetente = readLineSync.questionInt(digiteRemetente);
-                if (users.codigoExistente(remetente) === true) {
+                const sender = readline_sync_1.default.questionInt(digiteRemetente);
+                const senderName = users.findUser(sender);
+                console.log(senderName);
+                if (!users.findUser(sender)) {
                     console.log('Código não existe');
                 }
                 else {
                     users.listUser();
-                    destinatario = readLineSync.questionInt(digiteDestinatario);
-                    if (users.codigoExistente(destinatario) !== true && destinatario === remetente) {
+                    const receiver = readline_sync_1.default.questionInt(digiteDestinatario);
+                    const receiverName = users.findUser(receiver);
+                    if (!users.findUser(receiver) || receiver === sender) {
                         console.log('Código não existe | Destinatario é igual ao remetente');
                     }
                     else {
-                        subject = readLineSync.question(digiteAssunto);
+                        const subject = readline_sync_1.default.question(digiteAssunto);
                         if (subject === '') {
                             console.log('Assunto vazio');
                         }
                         else {
-                            message = readLineSync.question(digiteMensagem);
-                            if (message === '') {
+                            const text = readline_sync_1.default.question(digiteMensagem);
+                            if (text === '') {
                                 console.log('Mensagem vazia');
                             }
                             else {
-                                fullMessage = Object.assign({ destinatario, remetente, subject, message });
-                                messages.push(fullMessage);
-                                listMessages();
+                                const message = new Message_1.Message(sender, senderName, receiver, receiverName, subject, text);
+                                messages.createMessage(message);
+                                messages.listMessages();
                             }
                         }
                     }
@@ -94,13 +79,11 @@ while (option !== 4) {
             break;
         case 3:
             users.listUser();
-            idViewMessage = readLineSync.questionInt(verMensagem);
-            if (users.codigoExistente(idViewMessage) === true && findMessages(idViewMessage) !== []) {
+            idViewMessage = readline_sync_1.default.questionInt(verMensagem);
+            messages.haveMessage(idViewMessage);
+            if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);
-                let messagesSpread = findMessages(idViewMessage);
-                for (let i = 0; i < messagesSpread.length; i++) {
-                    console.log(`[Assunto: ${messagesSpread[i].subject}]\n[Recebida/Enviada]\nEnviado por: [${messagesSpread[i].remetente}] | Recebida por: [${messagesSpread[i].destinatario}]\n[Mensagem]\n${messagesSpread[i].message}\n---------\n`);
-                }
+                messages.findMessages(idViewMessage);
             }
             else {
                 console.log('Usuario não existe | Nenhuma mensagem do usuario');

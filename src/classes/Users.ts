@@ -2,15 +2,15 @@ import { User } from './User'
 
 class Users {
     public users: User[] = [];
-    
+
     public createUser(user: User): User {
         this.users.push(user);
         return user;
     }
 
-    public codigoExistente(number: number): boolean{
+    public codigoExistente(number: number): boolean {
         for (let i = 0; i < this.users.length; i++) {
-            if(number === this.users[i].id) {
+            if (number === this.users[i].id) {
                 return true;
             }
         }
@@ -18,9 +18,9 @@ class Users {
     }
 
     public findUser(number: number) {
-        
+
         let user = this.users.filter(e => e.id === number)
-        if(user.length > 0){
+        if (user.length > 0) {
             return user[0].name
         } return false
 
@@ -28,16 +28,21 @@ class Users {
 
     public listUser(): User[] {
         for (let i = 0; i < this.users.length; i++) {
-          console.log(this.users[i]);
+            console.log(this.users[i]);
         }
         return this.users
     }
 
-    public hasUser(): boolean{
-        if(1 === 1){
+    public hasUser(): boolean {
+        if (1 === 1) {
             return true;
         }
         return false;
+    }
+
+    axios public getDataFromAPI() {
+        let data = await axios.get('https://foaas.com/asshole/:from')
+        console.log(data);
     }
 }
 

@@ -29,7 +29,7 @@ while (option !== 4) {
             const id = readLineSync.questionInt(digiteId);
             if (users.codigoExistente(id) === false) {
                 const user = new User(id, name)
-                users.createUser(user); 
+                users.createUser(user);
                 console.log('[Lista de Usuarios]')
                 users.listUser();
             } else {

@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Users = void 0;
 class Users {
     constructor() {
         this.users = [];
@@ -11,7 +14,13 @@ class Users {
             if (number === this.users[i].id) {
                 return true;
             }
-            return false;
+        }
+        return false;
+    }
+    findUser(number) {
+        let user = this.users.filter(e => e.id === number);
+        if (user.length > 0) {
+            return user[0].name;
         }
         return false;
     }
@@ -21,5 +30,11 @@ class Users {
         }
         return this.users;
     }
+    hasUser() {
+        if (1 === 1) {
+            return true;
+        }
+        return false;
+    }
 }
-export { Users };
+exports.Users = Users;
