@@ -1,4 +1,6 @@
-import { User } from './User'
+import { User } from './User';
+
+const axios = require('axios').default;
 
 class Users {
     public users: User[] = [];
@@ -40,8 +42,9 @@ class Users {
         return false;
     }
 
-    axios public getDataFromAPI() {
-        let data = await axios.get('https://foaas.com/asshole/:from')
+    public async getDataFromAPI() {
+        let res = await axios.get('https://foaas.com/asshole/:from')
+        let data = res.data
         console.log(data);
     }
 }
