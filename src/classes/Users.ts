@@ -35,11 +35,14 @@ class Users {
         return this.users
     }
 
-    public async getDataFromAPI() {
-        let res = await axios.get('https://foaas.com/asshole/:from')
-        let data = res.data
-        console.log(data);
-    }
+    async getUser() {
+        try {
+          const response = await axios.get('https://foaas.com/');
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
 }
 
 export { Users };

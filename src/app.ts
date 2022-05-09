@@ -4,6 +4,10 @@ import { Users } from './classes/Users';
 import { Message } from './classes/Message';
 import { Messages } from './classes/Messages';
 
+
+
+
+
 const menu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
 const digiteNome: string = 'Digite seu nome\n';
 const digiteId: string = 'Digite um ID\n';
@@ -18,6 +22,8 @@ let option: number = 0;
 let idViewMessage: number = 0;
 const users = new Users();
 const messages = new Messages()
+// Tentativa de conectar com API users.getUser();
+
 
 while (option !== 4) {
     console.log('---------')

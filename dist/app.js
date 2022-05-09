@@ -20,6 +20,7 @@ var option = 0;
 var idViewMessage = 0;
 var users = new Users_1.Users();
 var messages = new Messages_1.Messages();
+// Tentativa de conectar com API users.getUser();
 while (option !== 4) {
     console.log('---------');
     console.log(menu);
