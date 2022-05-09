@@ -1,22 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-class User {
-    constructor(id, name) {
+var User = /** @class */ (function () {
+    function User(id, name) {
         this.name = name;
         this.id = id;
     }
-    getId() {
+    User.prototype.getId = function () {
         return this.id;
-    }
-    setId(id) {
+    };
+    User.prototype.setId = function (id) {
         this.id = id;
-    }
-    getName() {
+    };
+    User.prototype.getName = function () {
         return this.name;
-    }
-    setName(name) {
+    };
+    User.prototype.setName = function (name) {
         this.name = name;
-    }
-}
+    };
+    return User;
+}());
 exports.User = User;

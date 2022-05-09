@@ -27,7 +27,7 @@ while (option !== 4) {
         case 1:
             const name = readLineSync.question(digiteNome);
             const id = readLineSync.questionInt(digiteId);
-            if (users.codigoExistente(id) === false) {
+            if (users.hasUser(id) === false) {
                 const user = new User(id, name)
                 users.createUser(user);
                 console.log('[Lista de Usuarios]')
@@ -50,9 +50,11 @@ while (option !== 4) {
                     users.listUser();
                     const receiver = readLineSync.questionInt(digiteDestinatario)
                     const receiverName = users.findUser(receiver)
-                    if (!users.findUser(receiver) || receiver === sender) {
-                        console.log('Código não existe | Destinatario é igual ao remetente')
-                    } else {
+                    if (!users.findUser(receiver)){
+                        console.log('Código não existe')
+                     } else if(receiver === sender){
+                        console.log('Destinatario é igual ao remetente')
+                     } else {
                         const subject = readLineSync.question(digiteAssunto)
                         if (subject === '') {
                             console.log('Assunto vazio')
@@ -77,8 +79,10 @@ while (option !== 4) {
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);
                 messages.findMessages(idViewMessage);
-            } else {
-                console.log('Usuario não existe | Nenhuma mensagem do usuario')
+            } else if (!users.findUser(idViewMessage)){
+                console.log('Usuario não existe')
+            } else if(!messages.haveMessage(idViewMessage)){
+                console.log('Nenhuma mensagem do usuario')
             }
             break;
     }

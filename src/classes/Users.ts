@@ -10,7 +10,7 @@ class Users {
         return user;
     }
 
-    public codigoExistente(number: number): boolean {
+    public hasUser(number: number): boolean {
         for (let i = 0; i < this.users.length; i++) {
             if (number === this.users[i].id) {
                 return true;
@@ -33,13 +33,6 @@ class Users {
             console.log(this.users[i]);
         }
         return this.users
-    }
-
-    public hasUser(): boolean {
-        if (1 === 1) {
-            return true;
-        }
-        return false;
     }
 
     public async getDataFromAPI() {

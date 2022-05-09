@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Message = void 0;
-class Message {
-    constructor(sender, senderName, receiver, receiverName, subject, text) {
+var Message = /** @class */ (function () {
+    function Message(sender, senderName, receiver, receiverName, subject, text) {
         this.sender = sender;
         this.senderName = senderName;
         this.receiver = receiver;
@@ -10,29 +10,30 @@ class Message {
         this.subject = subject;
         this.text = text;
     }
-    getSender() {
+    Message.prototype.getSender = function () {
         return this.sender;
-    }
-    setSender(sender) {
+    };
+    Message.prototype.setSender = function (sender) {
         this.sender = sender;
-    }
-    getReceiver() {
+    };
+    Message.prototype.getReceiver = function () {
         return this.receiver;
-    }
-    setReceiver(receiver) {
+    };
+    Message.prototype.setReceiver = function (receiver) {
         this.receiver = receiver;
-    }
-    getSubject() {
+    };
+    Message.prototype.getSubject = function () {
         return this.subject;
-    }
-    setSubject(subject) {
+    };
+    Message.prototype.setSubject = function (subject) {
         this.subject = subject;
-    }
-    getText() {
+    };
+    Message.prototype.getText = function () {
         return this.text;
-    }
-    setText(text) {
+    };
+    Message.prototype.setText = function (text) {
         this.text = text;
-    }
-}
+    };
+    return Message;
+}());
 exports.Message = Message;
