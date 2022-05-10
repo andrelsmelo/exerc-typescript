@@ -1,3 +1,5 @@
 # exerc-typescript
 
-    - `npm start para rodar o projeto no console`
+Para iniciar o projeto execute
+    - `npm install`
+    - `npm start`
