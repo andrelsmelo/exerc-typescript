@@ -15,7 +15,7 @@ var typeItSender = 'Escolha um remetente\n';
 var typeItReceiver = 'Escolha um destinatario\n';
 var typeItSubject = 'Digite um assunto\n';
 var typeItText = 'Digite sua mensagem\n';
-var seeText = 'Digite o ID do usuario que deseja ver o historico\n';
+var verMensagem = 'Digite o ID do usuario que deseja ver o historico\n';
 var option = 0;
 var idViewMessage = 0;
 var users = new Users_1.Users();
@@ -29,7 +29,7 @@ while (option !== 4) {
         case 1:
             var name_1 = readline_sync_1.default.question(typeItName);
             var id = readline_sync_1.default.questionInt(typeItId);
-            if (users.hasUser(id) === false) {
+            if (users.hasUser(id)) {
                 var user = new User_1.User(id, name_1);
                 users.createUser(user);
                 console.log('[Lista de Usuarios]');
@@ -83,7 +83,7 @@ while (option !== 4) {
             break;
         case 3:
             users.listUser();
-            idViewMessage = readline_sync_1.default.questionInt(seeText);
+            idViewMessage = readline_sync_1.default.questionInt(verMensagem);
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log("Mensagens do usuario ".concat(idViewMessage));

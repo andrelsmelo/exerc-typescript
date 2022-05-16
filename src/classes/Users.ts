@@ -10,13 +10,8 @@ class Users {
         return user;
     }
 
-    public hasUser(number: number): boolean {
-        for (let i = 0; i < this.users.length; i++) {
-            if (number === this.users[i].id) {
-                return true;
-            }
-        }
-        return false;
+    public hasUser(number: number) {
+        return this.users.find(user => user.id === number)
     }
 
     public findUser(number: number) {

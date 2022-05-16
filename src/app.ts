@@ -15,7 +15,7 @@ const typeItSender: string = 'Escolha um remetente\n'
 const typeItReceiver: string = 'Escolha um destinatario\n'
 const typeItSubject: string = 'Digite um assunto\n'
 const typeItText: string = 'Digite sua mensagem\n'
-const seeText: string = 'Digite o ID do usuario que deseja ver o historico\n'
+const verMensagem: string = 'Digite o ID do usuario que deseja ver o historico\n'
 
 
 let option: number = 0;
@@ -33,7 +33,7 @@ while (option !== 4) {
         case 1:
             const name = readLineSync.question(typeItName);
             const id = readLineSync.questionInt(typeItId);
-            if (users.hasUser(id) === false) {
+            if (users.hasUser(id)) {
                 const user = new User(id, name)
                 users.createUser(user);
                 console.log('[Lista de Usuarios]')
@@ -80,7 +80,7 @@ while (option !== 4) {
             break;
         case 3:
             users.listUser();
-            idViewMessage = readLineSync.questionInt(seeText)
+            idViewMessage = readLineSync.questionInt(verMensagem)
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);

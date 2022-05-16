@@ -47,12 +47,7 @@ var Users = /** @class */ (function () {
         return user;
     };
     Users.prototype.hasUser = function (number) {
-        for (var i = 0; i < this.users.length; i++) {
-            if (number === this.users[i].id) {
-                return true;
-            }
-        }
-        return false;
+        return this.users.find(function (user) { return user.id === number; });
     };
     Users.prototype.findUser = function (number) {
         var user = this.users.filter(function (e) { return e.id === number; });
