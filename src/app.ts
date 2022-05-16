@@ -9,13 +9,13 @@ import { Messages } from './classes/Messages';
 
 
 const menu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
-const digiteNome: string = 'Digite seu nome\n';
-const digiteId: string = 'Digite um ID\n';
-const digiteRemetente: string = 'Escolha um remetente\n'
-const digiteDestinatario: string = 'Escolha um destinatario\n'
-const digiteAssunto: string = 'Digite um assunto\n'
-const digiteMensagem: string = 'Digite sua mensagem\n'
-const verMensagem: string = 'Digite o ID do usuario que deseja ver o historico\n'
+const typeItName: string = 'Digite seu nome\n';
+const typeItId: string = 'Digite um ID\n';
+const typeItSender: string = 'Escolha um remetente\n'
+const typeItReceiver: string = 'Escolha um destinatario\n'
+const typeItSubject: string = 'Digite um assunto\n'
+const typeItText: string = 'Digite sua mensagem\n'
+const seeText: string = 'Digite o ID do usuario que deseja ver o historico\n'
 
 
 let option: number = 0;
@@ -31,8 +31,8 @@ while (option !== 4) {
     option = readLineSync.questionInt('Digite uma opção\n');
     switch (option) {
         case 1:
-            const name = readLineSync.question(digiteNome);
-            const id = readLineSync.questionInt(digiteId);
+            const name = readLineSync.question(typeItName);
+            const id = readLineSync.questionInt(typeItId);
             if (users.hasUser(id) === false) {
                 const user = new User(id, name)
                 users.createUser(user);
@@ -47,25 +47,25 @@ while (option !== 4) {
                 console.log('Nenhum usuario cadastrado')
             } else {
                 users.listUser();
-                const sender = readLineSync.questionInt(digiteRemetente);
+                const sender = readLineSync.questionInt(typeItSender);
                 const senderName = users.findUser(sender);
                 console.log(senderName);
                 if (!users.findUser(sender)) {
                     console.log('Código não existe');
                 } else {
                     users.listUser();
-                    const receiver = readLineSync.questionInt(digiteDestinatario)
+                    const receiver = readLineSync.questionInt(typeItReceiver)
                     const receiverName = users.findUser(receiver)
                     if (!users.findUser(receiver)){
                         console.log('Código não existe')
                      } else if(receiver === sender){
                         console.log('Destinatario é igual ao remetente')
                      } else {
-                        const subject = readLineSync.question(digiteAssunto)
+                        const subject = readLineSync.question(typeItSubject)
                         if (subject === '') {
                             console.log('Assunto vazio')
                         } else {
-                            const text = readLineSync.question(digiteMensagem)
+                            const text = readLineSync.question(typeItText)
                             if (text === '') {
                                 console.log('Mensagem vazia')
                             } else {
@@ -80,7 +80,7 @@ while (option !== 4) {
             break;
         case 3:
             users.listUser();
-            idViewMessage = readLineSync.questionInt(verMensagem)
+            idViewMessage = readLineSync.questionInt(seeText)
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);

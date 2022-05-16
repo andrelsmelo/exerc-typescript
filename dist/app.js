@@ -9,13 +9,13 @@ var Users_1 = require("./classes/Users");
 var Message_1 = require("./classes/Message");
 var Messages_1 = require("./classes/Messages");
 var menu = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
-var digiteNome = 'Digite seu nome\n';
-var digiteId = 'Digite um ID\n';
-var digiteRemetente = 'Escolha um remetente\n';
-var digiteDestinatario = 'Escolha um destinatario\n';
-var digiteAssunto = 'Digite um assunto\n';
-var digiteMensagem = 'Digite sua mensagem\n';
-var verMensagem = 'Digite o ID do usuario que deseja ver o historico\n';
+var typeItName = 'Digite seu nome\n';
+var typeItId = 'Digite um ID\n';
+var typeItSender = 'Escolha um remetente\n';
+var typeItReceiver = 'Escolha um destinatario\n';
+var typeItSubject = 'Digite um assunto\n';
+var typeItText = 'Digite sua mensagem\n';
+var seeText = 'Digite o ID do usuario que deseja ver o historico\n';
 var option = 0;
 var idViewMessage = 0;
 var users = new Users_1.Users();
@@ -27,8 +27,8 @@ while (option !== 4) {
     option = readline_sync_1.default.questionInt('Digite uma opção\n');
     switch (option) {
         case 1:
-            var name_1 = readline_sync_1.default.question(digiteNome);
-            var id = readline_sync_1.default.questionInt(digiteId);
+            var name_1 = readline_sync_1.default.question(typeItName);
+            var id = readline_sync_1.default.questionInt(typeItId);
             if (users.hasUser(id) === false) {
                 var user = new User_1.User(id, name_1);
                 users.createUser(user);
@@ -45,7 +45,7 @@ while (option !== 4) {
             }
             else {
                 users.listUser();
-                var sender = readline_sync_1.default.questionInt(digiteRemetente);
+                var sender = readline_sync_1.default.questionInt(typeItSender);
                 var senderName = users.findUser(sender);
                 console.log(senderName);
                 if (!users.findUser(sender)) {
@@ -53,7 +53,7 @@ while (option !== 4) {
                 }
                 else {
                     users.listUser();
-                    var receiver = readline_sync_1.default.questionInt(digiteDestinatario);
+                    var receiver = readline_sync_1.default.questionInt(typeItReceiver);
                     var receiverName = users.findUser(receiver);
                     if (!users.findUser(receiver)) {
                         console.log('Código não existe');
@@ -62,12 +62,12 @@ while (option !== 4) {
                         console.log('Destinatario é igual ao remetente');
                     }
                     else {
-                        var subject = readline_sync_1.default.question(digiteAssunto);
+                        var subject = readline_sync_1.default.question(typeItSubject);
                         if (subject === '') {
                             console.log('Assunto vazio');
                         }
                         else {
-                            var text = readline_sync_1.default.question(digiteMensagem);
+                            var text = readline_sync_1.default.question(typeItText);
                             if (text === '') {
                                 console.log('Mensagem vazia');
                             }
@@ -83,7 +83,7 @@ while (option !== 4) {
             break;
         case 3:
             users.listUser();
-            idViewMessage = readline_sync_1.default.questionInt(verMensagem);
+            idViewMessage = readline_sync_1.default.questionInt(seeText);
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log("Mensagens do usuario ".concat(idViewMessage));
