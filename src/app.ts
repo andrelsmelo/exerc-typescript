@@ -12,7 +12,7 @@ const typeItSender: string = 'Escolha um remetente\n'
 const typeItReceiver: string = 'Escolha um destinatario\n'
 const typeItSubject: string = 'Digite um assunto\n'
 const typeItText: string = 'Digite sua mensagem\n'
-const verMensagem: string = 'Digite o ID do usuario que deseja ver o historico\n'
+const seeMessage: string = 'Digite o ID do usuario que deseja ver o historico\n'
 
 
 let option: number = 0;
@@ -91,7 +91,7 @@ while (option !== menu.Sair) {
             break;
         case menu.HistoricoDeMensagens:
             users.listUser();
-            idViewMessage = readLineSync.questionInt(verMensagem)
+            idViewMessage = readLineSync.questionInt(seeMessage)
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);
