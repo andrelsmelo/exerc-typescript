@@ -2,11 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Message = void 0;
 var Message = /** @class */ (function () {
-    function Message(sender, senderName, receiver, receiverName, subject, text) {
+    function Message(sender, receiver, subject, text) {
         this.sender = sender;
-        this.senderName = senderName;
         this.receiver = receiver;
-        this.receiverName = receiverName;
         this.subject = subject;
         this.text = text;
     }

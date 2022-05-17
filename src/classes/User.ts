@@ -1,6 +1,6 @@
-import { IUsers } from '../interfaces/IUsers'
+import { IUser } from '../interfaces/IUsers'
 
-class User implements IUsers {
+class User implements IUser {
 
     public id: number;
     public name: string;

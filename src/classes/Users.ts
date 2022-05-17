@@ -15,18 +15,10 @@ class Users {
     }
 
     public findUser(number: number) {
-
-        let user = this.users.filter(e => e.id === number)
-        if (user.length > 0) {
-            return user[0].name
-        } return false
-
+        return this.users.find(user => user.id === number)
     }
 
     public listUser(): User[] {
-        for (let i = 0; i < this.users.length; i++) {
-            console.log(this.users[i]);
-        }
         return this.users
     }
 

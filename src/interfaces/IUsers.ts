@@ -1,6 +1,6 @@
-interface IUsers {
+interface IUser {
     name: string,
     id: number
 }
 
-export { IUsers }
+export { IUser }

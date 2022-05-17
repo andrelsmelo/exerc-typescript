@@ -3,12 +3,9 @@ import { User } from './classes/User';
 import { Users } from './classes/Users';
 import { Message } from './classes/Message';
 import { Messages } from './classes/Messages';
+import { IUser } from './interfaces/IUsers';
 
-
-
-
-
-const menu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
+const firstMenu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
 const typeItName: string = 'Digite seu nome\n';
 const typeItId: string = 'Digite um ID\n';
 const typeItSender: string = 'Escolha um remetente\n'
@@ -22,45 +19,57 @@ let option: number = 0;
 let idViewMessage: number = 0;
 const users = new Users();
 const messages = new Messages()
-// Tentativa de conectar com API users.getUser();
 
+enum menu {
+    Cadastro = 1,
+    EnviarMensagem = 2,
+    HistoricoDeMensagens = 3,
+    Sair = 4
+}
 
-while (option !== 4) {
-    console.log('---------')
-    console.log(menu);
+function showAllUsers(users: IUser[]){
+    for (let i = 0; i < users.length; i++) {
+        console.log(users[i]);
+    }
+}
+
+while (option !== menu.Sair) {
+    console.log('---------');
+    console.log(firstMenu);
     option = readLineSync.questionInt('Digite uma opção\n');
     switch (option) {
-        case 1:
+        case menu.Cadastro:
             const name = readLineSync.question(typeItName);
             const id = readLineSync.questionInt(typeItId);
-            if (users.hasUser(id)) {
+            if (!users.hasUser(id)) {
                 const user = new User(id, name)
                 users.createUser(user);
-                console.log('[Lista de Usuarios]')
-                users.listUser();
+                console.log('[Lista de Usuarios]');
+                const allUsers = users.listUser();
+                showAllUsers(allUsers);
             } else {
                 console.log('ID já existente, tente Novamente');
             }
             break;
-        case 2:
+        case menu.EnviarMensagem:
             if (users.users.length === 0) {
                 console.log('Nenhum usuario cadastrado')
             } else {
                 users.listUser();
-                const sender = readLineSync.questionInt(typeItSender);
-                const senderName = users.findUser(sender);
+                const senderId = readLineSync.questionInt(typeItSender);
+                const senderName = users.findUser(senderId);
                 console.log(senderName);
-                if (!users.findUser(sender)) {
+                if (users.findUser(senderId) === undefined) {
                     console.log('Código não existe');
                 } else {
                     users.listUser();
-                    const receiver = readLineSync.questionInt(typeItReceiver)
-                    const receiverName = users.findUser(receiver)
-                    if (!users.findUser(receiver)){
+                    const receiverId = readLineSync.questionInt(typeItReceiver)
+                    const receiverName = users.findUser(receiverId)
+                    if (users.findUser(receiverId) === null) {
                         console.log('Código não existe')
-                     } else if(receiver === sender){
+                    } else if (receiverId === senderId) {
                         console.log('Destinatario é igual ao remetente')
-                     } else {
+                    } else {
                         const subject = readLineSync.question(typeItSubject)
                         if (subject === '') {
                             console.log('Assunto vazio')
@@ -69,7 +78,9 @@ while (option !== 4) {
                             if (text === '') {
                                 console.log('Mensagem vazia')
                             } else {
-                                const message = new Message(sender, senderName, receiver, receiverName, subject, text)
+                                const sender = new User(senderId, senderName)
+                                const receiver = new User(receiverId, receiverName)
+                                const message = new Message(sender, receiver, subject, text)
                                 messages.createMessage(message);
                                 messages.listMessages();
                             }
@@ -78,18 +89,21 @@ while (option !== 4) {
                 }
             }
             break;
-        case 3:
+        case menu.HistoricoDeMensagens:
             users.listUser();
             idViewMessage = readLineSync.questionInt(verMensagem)
             messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);
                 messages.findMessages(idViewMessage);
-            } else if (!users.findUser(idViewMessage)){
+            } else if (!users.findUser(idViewMessage)) {
                 console.log('Usuario não existe')
-            } else if(!messages.haveMessage(idViewMessage)){
+            } else if (!messages.haveMessage(idViewMessage)) {
                 console.log('Nenhuma mensagem do usuario')
             }
+            break;
+        case menu.Sair:
+            console.log('Até Mais!');
             break;
     }
 }

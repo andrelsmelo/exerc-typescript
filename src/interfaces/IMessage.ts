@@ -1,6 +1,8 @@
+import { User } from "../classes/User"
+
 interface IMessage {
-    sender: number,
-    receiver: number,
+    sender: User,
+    receiver: User,
     subject: string,
     text: string
 }

@@ -45,20 +45,20 @@ while (option !== 4) {
             }
             else {
                 users.listUser();
-                var sender = readline_sync_1.default.questionInt(typeItSender);
-                var senderName = users.findUser(sender);
+                var senderId = readline_sync_1.default.questionInt(typeItSender);
+                var senderName = users.findUser(senderId);
                 console.log(senderName);
-                if (!users.findUser(sender)) {
+                if (users.findUser(senderId) === undefined) {
                     console.log('Código não existe');
                 }
                 else {
                     users.listUser();
-                    var receiver = readline_sync_1.default.questionInt(typeItReceiver);
-                    var receiverName = users.findUser(receiver);
-                    if (!users.findUser(receiver)) {
+                    var receiverId = readline_sync_1.default.questionInt(typeItReceiver);
+                    var receiverName = users.findUser(receiverId);
+                    if (users.findUser(receiverId) === null) {
                         console.log('Código não existe');
                     }
-                    else if (receiver === sender) {
+                    else if (receiverId === senderId) {
                         console.log('Destinatario é igual ao remetente');
                     }
                     else {
@@ -72,7 +72,9 @@ while (option !== 4) {
                                 console.log('Mensagem vazia');
                             }
                             else {
-                                var message = new Message_1.Message(sender, senderName, receiver, receiverName, subject, text);
+                                var sender = new User_1.User(senderId, senderName);
+                                var receiver = new User_1.User(receiverId, receiverName);
+                                var message = new Message_1.Message(sender, receiver, subject, text);
                                 messages.createMessage(message);
                                 messages.listMessages();
                             }

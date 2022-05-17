@@ -50,11 +50,13 @@ var Users = /** @class */ (function () {
         return this.users.find(function (user) { return user.id === number; });
     };
     Users.prototype.findUser = function (number) {
-        var user = this.users.filter(function (e) { return e.id === number; });
+        return this.users.find(function (user) { return user.id === number; });
+        /*
+        let user = this.users.filter(e => e.id === number)
         if (user.length > 0) {
-            return user[0].name;
-        }
-        return false;
+            return user[0].name
+        } return null
+ */
     };
     Users.prototype.listUser = function () {
         for (var i = 0; i < this.users.length; i++) {
