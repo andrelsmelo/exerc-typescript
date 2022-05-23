@@ -1,5 +1,6 @@
 # exerc-typescript
 
 Para iniciar o projeto execute
-    - `npm install`
-    - `npm start`
+    - sudo docker-compose up -d
+    - docker exec -it exerc-ts bash
+    - npm start

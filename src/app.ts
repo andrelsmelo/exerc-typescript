@@ -4,6 +4,7 @@ import { Users } from './classes/Users';
 import { Message } from './classes/Message';
 import { Messages } from './classes/Messages';
 import { IUser } from './interfaces/IUsers';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 const firstMenu: string = '\n1 - Cadastrar Usuário\n2 - Enviar Mensagem\n3 - Ver histórico de mensagens\n4 - Sair\n';
 const typeItName: string = 'Digite seu nome\n';
@@ -18,7 +19,8 @@ const seeMessage: string = 'Digite o ID do usuario que deseja ver o historico\n'
 let option: number = 0;
 let idViewMessage: number = 0;
 const users = new Users();
-const messages = new Messages()
+const messages = new Messages();
+const allUsers = users.listUser();
 
 enum menu {
     Cadastro = 1,
@@ -45,7 +47,6 @@ while (option !== menu.Sair) {
                 const user = new User(id, name)
                 users.createUser(user);
                 console.log('[Lista de Usuarios]');
-                const allUsers = users.listUser();
                 showAllUsers(allUsers);
             } else {
                 console.log('ID já existente, tente Novamente');
@@ -55,19 +56,18 @@ while (option !== menu.Sair) {
             if (users.users.length === 0) {
                 console.log('Nenhum usuario cadastrado')
             } else {
-                users.listUser();
-                const senderId = readLineSync.questionInt(typeItSender);
-                const senderName = users.findUser(senderId);
-                console.log(senderName);
-                if (users.findUser(senderId) === undefined) {
+                showAllUsers(allUsers);
+                const findSender = readLineSync.questionInt(typeItSender);
+                const sender = users.findUser(findSender);
+                if (users.findUser(findSender) === undefined) {
                     console.log('Código não existe');
                 } else {
-                    users.listUser();
-                    const receiverId = readLineSync.questionInt(typeItReceiver)
-                    const receiverName = users.findUser(receiverId)
-                    if (users.findUser(receiverId) === null) {
+                    showAllUsers(allUsers);
+                    const findReceiver = readLineSync.questionInt(typeItReceiver)
+                    const receiver = users.findUser(findReceiver)
+                    if (users.findUser(findReceiver) === null) {
                         console.log('Código não existe')
-                    } else if (receiverId === senderId) {
+                    } else if (findReceiver === findSender) {
                         console.log('Destinatario é igual ao remetente')
                     } else {
                         const subject = readLineSync.question(typeItSubject)
@@ -78,9 +78,9 @@ while (option !== menu.Sair) {
                             if (text === '') {
                                 console.log('Mensagem vazia')
                             } else {
-                                const sender = new User(senderId, senderName)
-                                const receiver = new User(receiverId, receiverName)
-                                const message = new Message(sender, receiver, subject, text)
+                                const fullSender = new User(sender?.getId(), sender?.getName());
+                                const fullReceiver = new User(receiver?.getId(), receiver?.getName())
+                                const message = new Message(fullSender, fullReceiver, subject, text)
                                 messages.createMessage(message);
                                 messages.listMessages();
                             }
@@ -90,9 +90,8 @@ while (option !== menu.Sair) {
             }
             break;
         case menu.HistoricoDeMensagens:
-            users.listUser();
+            showAllUsers(allUsers);
             idViewMessage = readLineSync.questionInt(seeMessage)
-            messages.haveMessage(idViewMessage);
             if (users.findUser(idViewMessage) && messages.haveMessage(idViewMessage)) {
                 console.log(`Mensagens do usuario ${idViewMessage}`);
                 messages.findMessages(idViewMessage);
